@@ -32,7 +32,33 @@ EncoderDecoder::EncoderDecoder(ConnectionHandler &connectionHandler):connectionH
                 break;
 
             case 10:{
+                char Opcode[2];
+                connectionHandler.getBytes(Opcode,2);
+                switch (bytesToShort(Opcode))
 
+                    case 4:{
+                    printFunction("ACK 4 ");
+                    }
+                    break;
+                    case 7:{
+                       printFunction("ACK 7 ");
+                    }
+                    break;
+                    case 8:{
+                      char numOfPost[2];
+                      char numOffollowers[2];
+                      char numOffollowing[2];
+                      connectionHandler.getBytes(numOfPost,2);
+                      connectionHandler.getBytes(numOffollowers,2);
+                      connectionHandler.getBytes(numOffollowing,2);
+                      cout<<"ACK 8 "<<to_string(bytesToShort(numOfPost))<<" "<<
+                      to_string(bytesToShort(numOffollowers))<<" "<<to_string(bytesToShort(numOffollowing));
+                    }
+                    break;
+               default:{
+                   cout<<"ACK "<<to_string(bytesToShort(Opcode));
+
+                }
             }
                 break;
 
@@ -48,7 +74,20 @@ EncoderDecoder::EncoderDecoder(ConnectionHandler &connectionHandler):connectionH
     }
 
 
-    short EncoderDecoder::bytesToShort(char* bytesArr)
+void EncoderDecoder::printFunction(string Case) {
+    char numOfFollows[2];
+    connectionHandler.getBytes(numOfFollows, 2);
+
+    //check if it works with int and not short
+    int numberOfFollowers = bytesToShort(numOfFollows);
+    cout << Case << to_string(numberOfFollowers) << " ";
+    string followList;
+    connectionHandler.getFrameAscii(followList, '\0');
+    cout << followList;
+}
+
+
+short EncoderDecoder::bytesToShort(char* bytesArr)
     {
         short result = (short)((bytesArr[0] & 0xff) << 8);
         result += (short)(bytesArr[1] & 0xff);
@@ -60,5 +99,6 @@ EncoderDecoder::EncoderDecoder(ConnectionHandler &connectionHandler):connectionH
         bytesArr[0] = ((num >> 8) & 0xFF);
         bytesArr[1] = (num & 0xFF);
     }
+
 
 #endif
