@@ -40,5 +40,5 @@ add_executable(Boost_Echo_Client
                 src/echoClient.cpp
                 src/EncoderDecoder.cpp src/readFromKeyBoard.cpp src/serverToClient.cpp
                 src/readFromKeyBoard.cpp src/serverToClient.cpp
-                makefile)
+                makefile include/readFromKeyBoard.h)
 target_link_libraries(Boost_Echo_Client LINK_PUBLIC ${Boost_LIBRARIES})
