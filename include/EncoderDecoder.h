@@ -13,6 +13,7 @@ public:
     EncoderDecoder(ConnectionHandler &connectionHandler);
     short bytesToShort(char* bytesArr);
     void shortToBytes(short num, char* bytesArr);
+    void printFunction(std::string Case);
     void decode();
 
 
