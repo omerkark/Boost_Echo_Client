@@ -35,10 +35,10 @@ include_directories(include)
 
 add_executable(Boost_Echo_Client
                 include/connectionHandler.h
-                include/EncoderDecoder.h
                 src/connectionHandler.cpp
                 src/echoClient.cpp
-                src/EncoderDecoder.cpp src/readFromKeyBoard.cpp src/serverToClient.cpp
                 src/readFromKeyBoard.cpp src/serverToClient.cpp
-                makefile include/readFromKeyBoard.h src/BGSclient.cpp)
+                src/readFromKeyBoard.cpp src/serverToClient.cpp
+                makefile include/readFromKeyBoard.h src/BGSclient.cpp
+                include/serverToClient.h)
 target_link_libraries(Boost_Echo_Client LINK_PUBLIC ${Boost_LIBRARIES})
