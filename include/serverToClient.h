@@ -8,17 +8,17 @@
 
 class serverToClient{
 
+public:
+    serverToClient (ConnectionHandler &connectionHandler,bool& globalTerminate);
+    void run();
+    bool &terminate;
 
-    serverToClient (ConnectionHandler &connectionHandler);
+private:
     short bytesToShort(char* bytesArr);
     void shortToBytes(short num, char* bytesArr);
     void printFunction(std::string Case);
     void decode();
-    void run();
-
-private:
     ConnectionHandler &connectionHandler;
-    bool terminate;
 
 };
 

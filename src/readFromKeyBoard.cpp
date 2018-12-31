@@ -3,11 +3,13 @@
 //
 #include <boost/algorithm/string.hpp>
 #include <readFromKeyBoard.h>
-#include <EncoderDecoder.h>
+#include <vector>
+#include <iostream>
+
 using namespace std;
 
 
-    readFromKeyBoard::readFromKeyBoard (bool& globalTerminate , std::mutex& mutex) :terminate(globalTerminate), _mutex(mutex) {}
+    readFromKeyBoard::readFromKeyBoard (ConnectionHandler &connectionHandler, bool& globalTerminate , std::mutex& mutex):connectionHandler(connectionHandler),terminate(globalTerminate), _mutex(mutex) {}
 
     CommandType readFromKeyBoard::convertStringToEnum(std::string s) {
         if (s == "REGISTER")
@@ -29,7 +31,7 @@ using namespace std;
     }
 
        void readFromKeyBoard::run(){
-            while(terminate != true){
+            while(!terminate){
                 string line;
                 vector<string> words;
 
@@ -39,7 +41,8 @@ using namespace std;
 
                 switch (enumCommand){
                     case REGISTER:{
-
+                    char userName =
+                    connectionHandler.sendBytes(char userName[])
                     }
                         break;
                     case LOGIN:{

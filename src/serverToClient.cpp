@@ -4,7 +4,7 @@
 // Created by omerkark@wincs.cs.bgu.ac.il on 12/30/18.
 //
 using namespace std;
-serverToClient::serverToClient(ConnectionHandler &connectionHandler):connectionHandler(connectionHandler),terminate(false){}
+serverToClient::serverToClient(ConnectionHandler &connectionHandler,bool& globalTerminate):connectionHandler(connectionHandler),terminate(globalTerminate){}
 
 void serverToClient::run() {
     while (!terminate) {
@@ -17,11 +17,7 @@ void serverToClient::decode(){
     connectionHandler.getBytes(Opcode, 2);
 
     switch (bytesToShort(Opcode)) {
-        case 3:{
-            cout<<"ACK 3";
-            connectionHandler.close();
-            terminate = true;
-        }
+
         case 9: {
             char Post_PM[1];
             connectionHandler.getBytes(Post_PM, 1);
@@ -41,14 +37,23 @@ void serverToClient::decode(){
             connectionHandler.getBytes(Opcode,2);
             switch (bytesToShort(Opcode))
 
-                case 4:{
-                    printFunction("ACK 4 ");
-                }
+            case 3: {
+                cout << "ACK 3";
+                connectionHandler.close();
+                terminate = true;
+            }
             break;
+
+            case 4:{
+                printFunction("ACK 4 ");
+            }
+            break;
+
             case 7:{
                 printFunction("ACK 7 ");
             }
             break;
+
             case 8:{
                 char numOfPost[2];
                 char numOffollowers[2];
@@ -60,6 +65,7 @@ void serverToClient::decode(){
                     to_string(bytesToShort(numOffollowers))<<" "<<to_string(bytesToShort(numOffollowing));
             }
             break;
+
             default:{
                 cout<<"ACK "<<to_string(bytesToShort(Opcode));
 
