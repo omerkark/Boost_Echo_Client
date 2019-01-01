@@ -23,5 +23,4 @@ public:
     void run();
     void shortToBytes(short num, char* bytesArr);
     string contentToSend(vector<string> words, int index);
-
 };

@@ -8,11 +8,12 @@
 #include <boost/algorithm/string.hpp>
 #include <readFromKeyBoard.h>
 #include <serverToClient.h>
+#include <thread>
 using namespace std;
 
 int main (int argc, char *argv[]) {
 
-    bool * login =new bool(false);
+    bool * login = new bool(false);
 
 
     std::string host = "127.0.0.1";
@@ -24,11 +25,15 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
-    readFromKeyBoard r (connectionHandler, login);
-    //readFromKeyBoard readFromKeyBoard1(&connectionHandler , &login);
-    //serverToClient serverToClient1(&connectionHandler ,);
+    readFromKeyBoard reader (connectionHandler, login);
+    serverToClient serverToClient1(connectionHandler , login);
+
+    thread keyBoard(&readFromKeyBoard::run, &reader);
+    thread server2Client(&serverToClient::run, &serverToClient1);
+
+    keyBoard.join();
+    server2Client.join();
 
     delete login;
     delete connectionHandler;
-
 }

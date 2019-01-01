@@ -9,16 +9,16 @@
 class serverToClient{
 
 public:
-    serverToClient (ConnectionHandler &connectionHandler,bool& globalTerminate);
+    serverToClient (ConnectionHandler * connectionHandler, bool * globalTerminate);
     void run();
-    bool &login;
+    bool * login;
 
 private:
     short bytesToShort(char* bytesArr);
     void shortToBytes(short num, char* bytesArr);
     void printFunction(std::string Case);
     void decode();
-    ConnectionHandler &connectionHandler;
+    ConnectionHandler *connectionHandler;
 
 };
 
