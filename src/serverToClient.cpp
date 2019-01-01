@@ -4,7 +4,7 @@
 // Created by omerkark@wincs.cs.bgu.ac.il on 12/30/18.
 //
 using namespace std;
-serverToClient::serverToClient(ConnectionHandler &connectionHandler,bool& globalTerminate):connectionHandler(connectionHandler),terminate(globalTerminate){}
+serverToClient::serverToClient(ConnectionHandler &connectionHandler,bool& globalLogin):connectionHandler(connectionHandler),login(globalLogin){}
 
 void serverToClient::run() {
     while (!terminate) {
@@ -36,11 +36,14 @@ void serverToClient::decode(){
             char Opcode[2];
             connectionHandler.getBytes(Opcode,2);
             switch (bytesToShort(Opcode))
+            case 2: {
+                cout<<"ACK 2";
+                login = true;
+            }
 
             case 3: {
                 cout << "ACK 3";
                 connectionHandler.close();
-                terminate = true;
             }
             break;
 

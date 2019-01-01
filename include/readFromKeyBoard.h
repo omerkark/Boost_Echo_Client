@@ -6,25 +6,22 @@
 #define BOOST_ECHO_CLIENT_READFROMKEYBOARD_H
 
 #endif //BOOST_ECHO_CLIENT_READFROMKEYBOARD_H
-#include <mutex>
 #include "connectionHandler.h"
 
 using namespace std;
 
 
 class readFromKeyBoard{
+private:
+    bool &login;
+    ConnectionHandler &connectionHandler;
+    bool terminate = false;
+
 public:
-    readFromKeyBoard (ConnectionHandler &connectionHandler, bool& globalTerminate , std::mutex& mutex);
+    readFromKeyBoard (ConnectionHandler &connectionHandler, bool &globalLogin);
     short convertStringToshort(std::string s);
     void run();
     void shortToBytes(short num, char* bytesArr);
     string contentToSend(vector<string> words, int index);
-
-
-    private:
-        bool &terminate;
-        std::mutex & _mutex;
-        ConnectionHandler &connectionHandler;
-
 
 };
