@@ -46,7 +46,7 @@ using namespace std;
                 short opcode = convertStringToshort(words[0]);
                 char opcodeArr[2];
                 shortToBytes(opcode, opcodeArr);
-                connectionHandler.sendBytes(opcodeArr, 2);
+                connectionHandler->sendBytes(opcodeArr, 2);
 
                 switch (opcode){
                     case 1:
@@ -73,14 +73,14 @@ using namespace std;
                         break;
                     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~POST~~~~~~~~~~~~~~~~~~~~~~~
                     case 5:{
-                        string content = contentToSend(words , 1);
+                        string content = readFromKeyBoard::contentToSend(words , 1);
                         connectionHandler->sendLine(content);
                     }
                         break;
                     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PM~~~~~~~~~~~~~~~~~~~~~~~
                     case 6:{
                         connectionHandler->sendLine(words[1]);
-                        string content = contentToSend(words, 2);
+                        string content = readFromKeyBoard::contentToSend(words, 2);
 
                     }
                         break;
@@ -95,7 +95,7 @@ using namespace std;
             }
         }
 
-    string contentToSend(vector<string> words , int index){
+    string readFromKeyBoard::contentToSend(vector<string> words , int index){
         string content;
         for(unsigned int i =index; i < words.size(); i++ ){
             content += words[i] + " ";
