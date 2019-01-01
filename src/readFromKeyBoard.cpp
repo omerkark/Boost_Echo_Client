@@ -54,6 +54,7 @@ using namespace std;
                         connectionHandler->sendLine(words[1]);
                         connectionHandler->sendLine(words[2]);
                     }
+                        break;
                     case 3:{
                         if((*login))
                            terminate = true;
@@ -89,9 +90,12 @@ using namespace std;
                         break;
                     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~STAT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     case 8:{
-                        connectionHandler->sendLine(words[1]);                    }
+                        connectionHandler->sendLine(words[1]);
+                    }
+                    break;
                 }
-                break;
+                words.clear();
+                bytesForServer.clear();
             }
         }
 

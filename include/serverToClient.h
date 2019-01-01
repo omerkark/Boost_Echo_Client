@@ -12,6 +12,7 @@ public:
     serverToClient (ConnectionHandler * connectionHandler, bool * globalTerminate);
     void run();
     bool * login;
+    bool terminate= false;
 
 private:
     short bytesToShort(char* bytesArr);

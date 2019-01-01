@@ -32,46 +32,46 @@ void serverToClient::decode(){
         }
             break;
 
-        case 10:{
+        case 10: {
+
             char Opcode[2];
-            connectionHandler->getBytes(Opcode,2);
-            switch (bytesToShort(Opcode))
-            case 2: {
-                cout<<"ACK 2";
-                *login = true;
-            }
+            connectionHandler->getBytes(Opcode, 2);
+            switch (bytesToShort(Opcode)) {
+                case 2: {
+                    cout << "ACK 2";
+                    *login = true;
+                }
+                break;
+                case 3: {
+                    cout << "ACK 3";
+                    connectionHandler->close();
+                    terminate = true;
+                }
+                break;
+                case 4: {
+                    printFunction("ACK 4 ");
+                }
+                break;
+                case 7: {
+                    printFunction("ACK 7 ");
+                }
+                break;
+                case 8: {
+                    char numOfPost[2];
+                    char numOffollowers[2];
+                    char numOffollowing[2];
+                    connectionHandler->getBytes(numOfPost, 2);
+                    connectionHandler->getBytes(numOffollowers, 2);
+                    connectionHandler->getBytes(numOffollowing, 2);
+                    cout << "ACK 8 " << to_string(bytesToShort(numOfPost)) << " " <<
+                         to_string(bytesToShort(numOffollowers)) << " " << to_string(bytesToShort(numOffollowing));
+                }
 
-            case 3: {
-                cout << "ACK 3";
-                connectionHandler->close();
-            }
-            break;
-
-            case 4:{
-                printFunction("ACK 4 ");
-            }
-            break;
-
-            case 7:{
-                printFunction("ACK 7 ");
-            }
-            break;
-
-            case 8:{
-                char numOfPost[2];
-                char numOffollowers[2];
-                char numOffollowing[2];
-                connectionHandler->getBytes(numOfPost,2);
-                connectionHandler->getBytes(numOffollowers,2);
-                connectionHandler->getBytes(numOffollowing,2);
-                cout<<"ACK 8 "<<to_string(bytesToShort(numOfPost))<<" "<<
-                    to_string(bytesToShort(numOffollowers))<<" "<<to_string(bytesToShort(numOffollowing));
-            }
-            break;
-
-            default:{
-                cout<<"ACK "<<to_string(bytesToShort(Opcode));
-
+                default: {
+                    int op = bytesToShort(Opcode);
+                    cout << "ACK " << op;
+                }
+                    break;
             }
         }
             break;

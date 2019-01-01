@@ -17,6 +17,7 @@ int main (int argc, char *argv[]) {
 
 
     std::string host = "127.0.0.1";
+    //std::string host = "132.73.198.168";
     short port = 7777;
     ConnectionHandler *connectionHandler=new ConnectionHandler (host, port);
 
@@ -31,8 +32,9 @@ int main (int argc, char *argv[]) {
     thread keyBoard(&readFromKeyBoard::run, &reader);
     thread server2Client(&serverToClient::run, &serverToClient1);
 
-    keyBoard.join();
     server2Client.join();
+    keyBoard.join();
+
 
     delete login;
     delete connectionHandler;
