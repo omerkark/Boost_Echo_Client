@@ -9,7 +9,7 @@
 using namespace std;
 
 
-    readFromKeyBoard::readFromKeyBoard(ConnectionHandler &connectionHandler, bool &globalLogin): connectionHandler(connectionHandler) , login(globalLogin){};
+    readFromKeyBoard::readFromKeyBoard(ConnectionHandler &connectionHandler, bool *globalLogin): connectionHandler(connectionHandler) , login(globalLogin){};
 
     short readFromKeyBoard::convertStringToshort(std::string s) {
         if (s == "REGISTER")
@@ -55,8 +55,8 @@ using namespace std;
                         connectionHandler.sendLine(words[2]);
                     }
                     case 3:{
-                        if(login)
-                           terminate = true;
+                        if((*login))
+                           *terminate = true;
                     }
                         break;
                     case 4:{

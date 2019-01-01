@@ -12,7 +12,7 @@ using namespace std;
 
 int main (int argc, char *argv[]) {
 
-    bool login = false;
+    bool * login =new bool(false);
 
 
     std::string host = "127.0.0.1";
