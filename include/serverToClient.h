@@ -11,7 +11,7 @@ class serverToClient{
 public:
     serverToClient (ConnectionHandler &connectionHandler,bool& globalTerminate);
     void run();
-    bool &terminate;
+    bool &login;
 
 private:
     short bytesToShort(char* bytesArr);

@@ -11,15 +11,14 @@
 
 using namespace std;
 
-enum CommandType{
-    REGISTER, LOGIN, LOGOUT, FOLLOW, POST, PM, USERLIST, STAT
-};
 
 class readFromKeyBoard{
 public:
     readFromKeyBoard (ConnectionHandler &connectionHandler, bool& globalTerminate , std::mutex& mutex);
-    CommandType convertStringToEnum(std::string s);
+    short convertStringToshort(std::string s);
     void run();
+    void shortToBytes(short num, char* bytesArr);
+    string contentToSend(vector<string> words, int index);
 
 
     private:

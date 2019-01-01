@@ -11,69 +11,95 @@ using namespace std;
 
     readFromKeyBoard::readFromKeyBoard (ConnectionHandler &connectionHandler, bool& globalTerminate , std::mutex& mutex):connectionHandler(connectionHandler),terminate(globalTerminate), _mutex(mutex) {}
 
-    CommandType readFromKeyBoard::convertStringToEnum(std::string s) {
+    short readFromKeyBoard::convertStringToshort(std::string s) {
         if (s == "REGISTER")
-            return REGISTER;
+            return ((short)1);
         if (s == "LOGIN")
-            return LOGIN;
+            return ((short)2);
         if (s == "LOGOUT")
-            return LOGOUT;
+            return ((short)3);
         if (s == "FOLLOW")
-            return FOLLOW;
+            return ((short)4);
         if (s == "POST")
-            return POST;
+            return ((short)5);
         if (s == "PM")
-            return PM;
+            return ((short)6);
         if (s == "USERLIST")
-            return USERLIST;
+            return ((short)7);
 
-        return STAT;
+        return ((short)8);
     }
+
+        void readFromKeyBoard::shortToBytes(short num, char* bytesArr)
+        {
+            bytesArr[0] = ((num >> 8) & 0xFF);
+            bytesArr[1] = (num & 0xFF);
+        }
 
        void readFromKeyBoard::run(){
             while(!terminate){
                 string line;
                 vector<string> words;
-
+                vector<char> bytesForServer;
                 getline(cin , line);
                 boost::split(words, line ,boost::is_any_of(" "));
-                CommandType enumCommand = convertStringToEnum(words[0]);
+                short opcode = convertStringToshort(words[0]);
+                char opcodeArr[2];
+                shortToBytes(opcode, opcodeArr);
+                connectionHandler.sendBytes(opcodeArr, 2);
 
-                switch (enumCommand){
-                    case REGISTER:{
-                    char userName =
-                    connectionHandler.sendBytes(char userName[])
+                switch (opcode){
+                    case 1:
+                    case 2:{
+                        connectionHandler.sendLine(words[1]);
+                        connectionHandler.sendLine(words[2]);
                     }
-                        break;
-                    case LOGIN:{
-
-                    }
-                        break;
-                    case LOGOUT:{
-
-                    }
-                        break;
-                    case FOLLOW:{
+                    case 3:{
 
                     }
                         break;
-                    case POST:{
+                    case 4:{
+                        char follow [1];
+                        follow[0] = ((char)(std::stoi(words[1])));
+                        connectionHandler.sendBytes(follow, 1);
+                        char numOfusers[2];
+                        shortToBytes(((short)(std::stoi(words[2]))), numOfusers);
+                        connectionHandler.sendBytes(numOfusers, 2);
+                        for(unsigned int i =3 ; i <words.size(); i++){
+                            connectionHandler.sendLine(words[i]);
+                        }
+                    }
+                        break;
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~POST~~~~~~~~~~~~~~~~~~~~~~~
+                    case 5:{
+                        string content = contentToSend(words , 1);
+                        connectionHandler.sendLine(content);
+                    }
+                        break;
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PM~~~~~~~~~~~~~~~~~~~~~~~
+                    case 6:{
+                        connectionHandler.sendLine(words[1]);
+                        string content = contentToSend(words, 2);
 
                     }
                         break;
-                    case PM:{
-
-                    }
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~USER-LIST~~~~~~~~~~~~~~~~~~~~~~~
+                    case 7:{}
                         break;
-                    case USERLIST:{
-
-                    }
-                        break;
-                    case STAT:{
-
-                    }
-                        break;
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~STAT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    case 8:{
+                        connectionHandler.sendLine(words[1]);                    }
                 }
+                break;
             }
         }
+
+    string contentToSend(vector<string> words , int index){
+        string content;
+        for(unsigned int i =index; i < words.size(); i++ ){
+            content += words[i] + " ";
+        }
+        return content;
+    }
+
 
