@@ -14,11 +14,11 @@ using namespace std;
 class readFromKeyBoard{
 private:
     bool * login;
-    ConnectionHandler &connectionHandler;
+    ConnectionHandler *connectionHandler;
     bool terminate = false;
 
 public:
-    readFromKeyBoard (ConnectionHandler &connectionHandler, bool * globalLogin);
+    readFromKeyBoard (ConnectionHandler *connectionHandler, bool * globalLogin);
     short convertStringToshort(std::string s);
     void run();
     void shortToBytes(short num, char* bytesArr);

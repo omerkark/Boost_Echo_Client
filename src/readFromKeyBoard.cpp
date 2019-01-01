@@ -9,7 +9,7 @@
 using namespace std;
 
 
-    readFromKeyBoard::readFromKeyBoard(ConnectionHandler &connectionHandler, bool *globalLogin): connectionHandler(connectionHandler) , login(globalLogin){};
+    readFromKeyBoard::readFromKeyBoard(ConnectionHandler *connectionHandler, bool *globalLogin): connectionHandler(connectionHandler) , login(globalLogin){};
 
     short readFromKeyBoard::convertStringToshort(std::string s) {
         if (s == "REGISTER")
@@ -51,35 +51,35 @@ using namespace std;
                 switch (opcode){
                     case 1:
                     case 2:{
-                        connectionHandler.sendLine(words[1]);
-                        connectionHandler.sendLine(words[2]);
+                        connectionHandler->sendLine(words[1]);
+                        connectionHandler->sendLine(words[2]);
                     }
                     case 3:{
                         if((*login))
-                           *terminate = true;
+                           terminate = true;
                     }
                         break;
                     case 4:{
                         char follow [1];
                         follow[0] = ((char)(std::stoi(words[1])));
-                        connectionHandler.sendBytes(follow, 1);
+                        connectionHandler->sendBytes(follow, 1);
                         char numOfusers[2];
                         shortToBytes(((short)(std::stoi(words[2]))), numOfusers);
-                        connectionHandler.sendBytes(numOfusers, 2);
+                        connectionHandler->sendBytes(numOfusers, 2);
                         for(unsigned int i =3 ; i <words.size(); i++){
-                            connectionHandler.sendLine(words[i]);
+                            connectionHandler->sendLine(words[i]);
                         }
                     }
                         break;
                     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~POST~~~~~~~~~~~~~~~~~~~~~~~
                     case 5:{
                         string content = contentToSend(words , 1);
-                        connectionHandler.sendLine(content);
+                        connectionHandler->sendLine(content);
                     }
                         break;
                     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PM~~~~~~~~~~~~~~~~~~~~~~~
                     case 6:{
-                        connectionHandler.sendLine(words[1]);
+                        connectionHandler->sendLine(words[1]);
                         string content = contentToSend(words, 2);
 
                     }
@@ -89,7 +89,7 @@ using namespace std;
                         break;
                     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~STAT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     case 8:{
-                        connectionHandler.sendLine(words[1]);                    }
+                        connectionHandler->sendLine(words[1]);                    }
                 }
                 break;
             }

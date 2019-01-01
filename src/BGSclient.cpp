@@ -17,15 +17,18 @@ int main (int argc, char *argv[]) {
 
     std::string host = "127.0.0.1";
     short port = 7777;
-    ConnectionHandler connectionHandler(host, port);
+    ConnectionHandler *connectionHandler=new ConnectionHandler (host, port);
 
-    if (!connectionHandler.connect()) {
+    if (!connectionHandler->connect()) {
         std::cerr << "Cannot connect to " << host << ":" << port << std::endl;
         return 1;
     }
 
-    readFromKeyBoard r (&connectionHandler, &login);
+    readFromKeyBoard r (connectionHandler, login);
     //readFromKeyBoard readFromKeyBoard1(&connectionHandler , &login);
     //serverToClient serverToClient1(&connectionHandler ,);
+
+    delete login;
+    delete connectionHandler;
 
 }
