@@ -38,12 +38,12 @@ void serverToClient::decode(){
             connectionHandler->getBytes(Opcode, 2);
             switch (bytesToShort(Opcode)) {
                 case 2: {
-                    cout << "ACK 2";
+                    cout << "ACK 2" << endl;
                     *login = true;
                 }
                 break;
                 case 3: {
-                    cout << "ACK 3";
+                    cout << "ACK 3" << endl;
                     connectionHandler->close();
                     terminate = true;
                 }
@@ -64,12 +64,12 @@ void serverToClient::decode(){
                     connectionHandler->getBytes(numOffollowers, 2);
                     connectionHandler->getBytes(numOffollowing, 2);
                     cout << "ACK 8 " << to_string(bytesToShort(numOfPost)) << " " <<
-                         to_string(bytesToShort(numOffollowers)) << " " << to_string(bytesToShort(numOffollowing));
+                         to_string(bytesToShort(numOffollowers)) << " " << to_string(bytesToShort(numOffollowing)) << endl;
                 }
 
                 default: {
                     int op = bytesToShort(Opcode);
-                    cout << "ACK " << op;
+                    cout << "ACK " << op << endl;
                 }
                     break;
             }
@@ -79,7 +79,7 @@ void serverToClient::decode(){
         case 11:{
             char opcode[2];
             connectionHandler->getBytes(opcode,2);
-            cout << "ERROR "<< bytesToShort(opcode);
+            cout << "ERROR "<< bytesToShort(opcode) << endl;
         }
             break;
     }
@@ -93,7 +93,7 @@ void serverToClient::printFunction(string Case) {
     cout << Case << to_string(numberOfFollowers) << " ";
     string followList;
     connectionHandler->getFrameAscii(followList, '\0');
-    cout << followList;
+    cout << followList << endl;
 }
 
 
