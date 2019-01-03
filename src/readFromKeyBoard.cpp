@@ -82,6 +82,7 @@ using namespace std;
                     case 6:{
                         connectionHandler->sendLine(words[1]);
                         string content = readFromKeyBoard::contentToSend(words, 2);
+                        connectionHandler->sendLine(content);
 
                     }
                         break;

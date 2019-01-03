@@ -22,13 +22,14 @@ void serverToClient::decode(){
             char Post_PM[1];
             connectionHandler->getBytes(Post_PM, 1);
             cout << "NOTIFICATION ";
-            if (Post_PM[0] == '0') cout << "PM ";
-            else cout << "public";
+            if (Post_PM[0] == 0) cout << "PM ";
+            else cout << "public ";
+
             string userName = "";
             connectionHandler->getFrameAscii(userName, '\0');
             string content = "";
             connectionHandler->getFrameAscii(content, '\0');
-            cout << userName + " " + content << endl;
+            cout << userName.substr(0,userName.size()-1) + " " + content.substr(0,content.size()-1) << endl;
         }
             break;
 
@@ -66,12 +67,13 @@ void serverToClient::decode(){
                     cout << "ACK 8 " << to_string(bytesToShort(numOfPost)) << " " <<
                          to_string(bytesToShort(numOffollowers)) << " " << to_string(bytesToShort(numOffollowing)) << endl;
                 }
+                    break;
 
                 default: {
                     int op = bytesToShort(Opcode);
                     cout << "ACK " << op << endl;
                 }
-                    break;
+                break;
             }
         }
             break;
@@ -92,8 +94,12 @@ void serverToClient::printFunction(string Case) {
     int numberOfFollowers = bytesToShort(numOfFollows);
     cout << Case << to_string(numberOfFollowers) << " ";
     string followList;
-    connectionHandler->getFrameAscii(followList, '\0');
-    cout << followList << endl;
+    for(unsigned int i= 0 ; i < numberOfFollowers ; i++) {
+        connectionHandler->getLine(followList);
+        cout << followList.substr(0, followList.size()-1) + " ";
+        followList.clear();
+    }
+    cout << endl;
 }
 
 
