@@ -11,8 +11,7 @@ class serverToClient{
 public:
     serverToClient (ConnectionHandler * connectionHandler, bool * globalTerminate);
     void run();
-    bool * login;
-    bool terminate= false;
+
 
 private:
     short bytesToShort(char* bytesArr);
@@ -20,6 +19,8 @@ private:
     void printFunction(std::string Case);
     void decode();
     ConnectionHandler *connectionHandler;
+    bool * login;
+    bool terminate= false;
 
 };
 

@@ -94,7 +94,7 @@ void serverToClient::printFunction(string Case) {
     int numberOfFollowers = bytesToShort(numOfFollows);
     cout << Case << to_string(numberOfFollowers) << " ";
     string followList;
-    for(unsigned int i= 0 ; i < numberOfFollowers ; i++) {
+    for(int i= 0 ; i < numberOfFollowers ; i++) {
         connectionHandler->getLine(followList);
         cout << followList.substr(0, followList.size()-1) + " ";
         followList.clear();

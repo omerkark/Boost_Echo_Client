@@ -17,7 +17,7 @@ int main (int argc, char *argv[]) {
 
 
     std::string host = "127.0.0.1";
-//    std::string host = "132.73.198.168";
+    //std::string host = "132.72.44.43";
     short port = 7777;
     ConnectionHandler *connectionHandler=new ConnectionHandler (host, port);
 

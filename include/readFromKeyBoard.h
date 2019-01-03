@@ -13,8 +13,8 @@ using namespace std;
 
 class readFromKeyBoard{
 private:
-    bool * login;
     ConnectionHandler *connectionHandler;
+    bool * login;
     bool terminate = false;
 
 public:
@@ -23,4 +23,5 @@ public:
     void run();
     void shortToBytes(short num, char* bytesArr);
     string contentToSend(vector<string> words, int index);
+
 };
