@@ -16,13 +16,10 @@ int main (int argc, char *argv[]) {
     bool * login = new bool(false);
 
 
-    std::string host = "127.0.0.1";
-    //std::string host = "132.72.44.43";
-    short port = 9999;
-    ConnectionHandler *connectionHandler=new ConnectionHandler (host, port);
+    ConnectionHandler *connectionHandler=new ConnectionHandler (argv[1] , atoi(argv[2]));
 
     if (!connectionHandler->connect()) {
-        std::cerr << "Cannot connect to " << host << ":" << port << std::endl;
+        std::cerr << "Cannot connect to " << argv[1] << ":" << atoi(argv[2]) << std::endl;
         return 1;
     }
 
